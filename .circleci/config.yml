@@ -1,0 +1,8 @@
+jobs:
+  build:
+    docker:
+      - image: onthertech/plasma-evm:latest
+
+    working_directory: /usr/bin/local
+    steps:
+      - run: geth --help
