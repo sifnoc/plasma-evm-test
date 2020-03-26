@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    docker:
+    machine:
       - image: circleci/cci-demo-docker-primary:0.0.2
 
     working_directory: /go/src/github.com/circleci/cci-demo-docker 
