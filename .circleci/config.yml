@@ -1,9 +1,36 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: onthertech/plasma-evm:latest
+  test:
+    build:
+      - image: circleci/cci-demo-docker-primary:0.0.2
 
-    working_directory: /usr/local/bin
+    working_directory: /go/src/github.com/circleci/cci-demo-docker 
     steps:
-      - run: geth --help
+    # This should go into custom primary image, here's only for the sake of explanation
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+      # This should go into custom primary image, here's only for the sake of explanation
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+
+      - run:
+          name: Clone plasma-evm-networks
+          command: |
+            git clone -b extention/docker https://github.com/Onther-Tech/plasma-evm-networks
+            cd plasma-evm-networks/private-testnet
+
+      - run:
+          name: Start container and verify it's working
+          command: |
+            set -x
+            docker-compose up -d
