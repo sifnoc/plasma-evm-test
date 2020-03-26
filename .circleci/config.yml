@@ -4,9 +4,16 @@ jobs:
     machine:
       image: ubuntu-1604:201903-01
 
-    working_directory: /home 
+    working_directory: /home/ubuntu
     steps:
     # This should go into custom primary image, here's only for the sake of explanation
+      - run:
+          name: Print Out current status
+          command: |
+            users
+            pwd
+            ls -all
+
       - run:
           name: Clone plasma-evm-networks
           command: |
