@@ -27,15 +27,9 @@ jobs:
           name: Clone plasma-evm-networks
           command: |
             git clone -b extention/docker https://github.com/Onther-Tech/plasma-evm-networks
-            cd plasma-evm-networks/private-testnet
-            echo "Current PAth"
-            pwd
-            ls
 
       - run:
           name: Start container and verify it's working
           command: |
-            echo "Current Path"
-            pwd
-            ls
+            cd plasma-evm-networks/private-testnet
             docker-compose up 
